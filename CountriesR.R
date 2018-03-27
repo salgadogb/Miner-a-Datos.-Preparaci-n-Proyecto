@@ -1,8 +1,7 @@
 # -------------------------------------------------
 # PEC2 - MINERÍA DE DATOS - "Preparación de datos"
-
-#               
 # -------------------------------------------------
+
 
 # 1.- Cargar archivo: "countries.xlsx"
 # -------------------------------------------------
@@ -16,19 +15,20 @@
 
 # 2.- VARIABLES DE ESTUDIO
 # -------------------------------------------------
-  names(tbl_countries_w)
-  str(tbl_countries_w)
+    str(tbl_countries_w)
 
   
 # 3.- TRANSFORMACIÓN DE DATOS
 # -------------------------------------------------
   
+  
 #  3.1.- work file: Replacing NA's by 'na' - * Manipular los datos faltantes NA *
 # -------------------------------------------------
   
-  # a.- # Filtrar datos y LIMPIEZA.
+    # a.- # Filtrar datos y LIMPIEZA.
   
   tbl_countries_w[is.na(tbl_countries_w[])]<- 'na'    # No tratar los casos no observados
+  
   
 
 # 3.2.- ANÁLISIS DE DATOS: "countries.xlsx" 
@@ -58,19 +58,23 @@
   #   A.1- PRODUCCIÓN DE CRUDO POR PAÍSES: gráfico de los mayores productores.
   # -------------------------------------------------
   
+  
     #  a.- Se extraerán solo los datos de PRODUCCIÓN observados y PAÍS correspondiente.
 
       tbl_CRUDE_OIL_NAME <- tbl_countries_w[tbl_countries_w$CRUDE_OIL_BAR_DAY!='na', c("NAME","CRUDE_OIL_BAR_DAY")] 
       CRUDE_OIL_BAR_DAY2 <- as.numeric(tbl_CRUDE_OIL_NAME$CRUDE_OIL_BAR_DAY) # numero <- caracter
 
+      
     #  b.- Se simplifican los datos de producción dividiendo por 1000
 
       CRUDE_OIL_BAR_X1000_DAY <- CRUDE_OIL_BAR_DAY2/1000
 
+      
     #  c.- Se añade una nueva columna a tbla_CRUDE_OIL_NAME y elimina la obsoleta con caracteres.
 
      tbl_CRUDE_OIL_NAME <- cbind(tbl_CRUDE_OIL_NAME, CRUDE_OIL_BAR_X1000_DAY)
      tbl_CRUDE_OIL_NAME <- tbl_CRUDE_OIL_NAME[ ,-(2)] 
+     
      
     #  d.- Se ordenan los datos de producción de crudo de mayor a menor
 
@@ -79,6 +83,7 @@
     
   #  A.2- GRÁFICO: de los mayores productores.
   # -------------------------------------------------
+    
     
     #  a.-Gráfico de "BARRAS":"PRODUCCIÓN DE CRUDO POR PAÍSES: barriles/día X 1000"  
 
@@ -96,24 +101,27 @@
     geom_bar(stat="identity") + ggtitle("PRODUCCIÓN DE CRUDO POR PAÍSES: barriles/día X 1000")+ theme_minimal()+
     coord_polar(theta = "x", direction=1 )   
 
-    # width = 700, height = 700,
     
   #  B.1- TRANSFORMACIÓN: Relación EXPECTATIVAS DE VIDA entre: Hombres vs Mujeres.
   # -------------------------------------------------    
+    
     
     # a.- Se extraerán solo los datos expectativas de vida H y M, y nombre país correspondiente.       
 
     tbl_LIFE_EXP_M_W <- tbl_countries_w[tbl_countries_w$MEM_LIFE_EXP!='na'&tbl_countries_w$WOMEN_LIFE_EXP!='na', c("NAME","MEM_LIFE_EXP","WOMEN_LIFE_EXP")]
    
+    
     # b.- Se convierten los caracteres en números para hacer cálculos. 
     
     MEM_LIFE_EXP2 <- as.numeric(tbl_LIFE_EXP_M_W$MEM_LIFE_EXP) # numero <- caracter
     WOMEN_LIFE_EXP2 <- as.numeric(tbl_LIFE_EXP_M_W$WOMEN_LIFE_EXP)
 
+    
     # c.- Se añaden dos nuevas columnas a LIFE_EXP_M_W y eliminan otras dos obsoletas
 
     tbl_LIFE_EXP_M_W <- cbind(tbl_LIFE_EXP_M_W, MEM_LIFE_EXP2,WOMEN_LIFE_EXP2 )
     tbl_LIFE_EXP_M_W <- tbl_LIFE_EXP_M_W[ ,-(2:3)] # Elimina las filas con caracteres
+    
     
     # d.- Se ordenan los datos de expectativas de vida por mujer
 
@@ -123,16 +131,19 @@
   #  B.2- GRÁFICO:nube de puntos de las dos variables con la recta de regresión.
   # -------------------------------------------------
     
+    
     # a.- Realizamos el gráfico de la nube de puntos de las dos variables con la recta de regresión
     
     plot(MEM_LIFE_EXP2~WOMEN_LIFE_EXP2, main="RELACIÓN EXPECTATIVA DE VIDA: HOMBRES & MUJERES", sub="Para cada país", 
           xlab="Expectativa Vida: MUJERES", ylab="Expectativa Vida: HOMBRES", data=tbl_LIFE_EXP_M_W, 
          col = c("orange", "blue"))
     
-      # b.- Hallamos la recta de regresión entre ambos resultados.
     
-    abline(lm(formula=MEM_LIFE_EXP2~WOMEN_LIFE_EXP2, data=tbl_LIFE_EXP_M_W),col="red")
-
+    # b.- Hallamos la recta de regresión entre ambos resultados.
+    
+    y <- abline(lm(formula=MEM_LIFE_EXP2~WOMEN_LIFE_EXP2, data=tbl_LIFE_EXP_M_W),col="red")
+   
+    
     #  c.- Obtenemos: pendiente de la recta, ordenada en el origen y coeficiente de determinación R2 
     
     RegModel.1 <- lm(formula=MEM_LIFE_EXP2~WOMEN_LIFE_EXP2, data=tbl_LIFE_EXP_M_W)
@@ -144,8 +155,10 @@
        #             Y = 0.87395X + 4.03783 (Permite calcular edad Hombre <- en función edad Mujer)
 
 
+    
   #  C.1- TRANSFORMACIÓN: Relación entre: `GDP_$_PER_CAPITA` & NATURAL_GROWTH. 
   # -------------------------------------------------
+    
     
     #  a.- Se extraerán solo los datos expectativas de: "NAME","GDP_$_PER_CAPITA","NATURAL_GROWTH"
 
@@ -153,18 +166,21 @@
     `GDP_$_PER_CAPITA2` <- as.numeric(tbl_GDP_NGROWTH$`GDP_$_PER_CAPITA`) # numero <- caracter
     NATURAL_GROWTH2 <- as.numeric(tbl_GDP_NGROWTH$NATURAL_GROWTH)
 
-    #  c.- Se añaden dos nuevas columnas a tbl_GDP_NGROWTH
+    
+    #  b.- Se añaden dos nuevas columnas a tbl_GDP_NGROWTH
 
     tbl_GDP_NGROWTH <- cbind(tbl_GDP_NGROWTH, `GDP_$_PER_CAPITA2`,NATURAL_GROWTH2 )
     tbl_GDP_NGROWTH <- tbl_GDP_NGROWTH[ ,-(2:3)] # Elimina las filas con caracteres deja números
    
-    #  d.- Se ordenan los datos de producción `GDP_$_PER_CAPITA2`
+    
+    #  c.- Se ordenan los datos de producción `GDP_$_PER_CAPITA2`
 
     tbl_GDP_NGROWTH <- tbl_GDP_NGROWTH[order(tbl_GDP_NGROWTH$`GDP_$_PER_CAPITA2`, decreasing = T), ]
     
 
   #   C.2- GRÁFICO:"NUBE DE PUNTOS" y "RESIDUOS" de las dos variables
   # -------------------------------------------------
+    
     
    # a.- Realizamos el gráfico de la nube de puntos de las dos variables con la recta de regresión
 
@@ -173,10 +189,12 @@
          Tasa Crecimiento & Renta Per Cápita", sub="Gráfico 1", 
     xlab="GDP - RENTA PER CÁPITA", ylab="TASA CRECIMIENTO NATURAL", data=tbl_GDP_NGROWTH, col = c("orange", "blue"))
 
+    
   # b.- Hallamos la recta de regresión entre ambos resultados.
        
     m0 <- lm(NATURAL_GROWTH2~`GDP_$_PER_CAPITA2`, data=tbl_GDP_NGROWTH)
     abline(m0,col="red")
+    
     
   # c.- Hallamos residuos entre ambos resultados.   
     
@@ -184,6 +202,7 @@
          ylab = "Residuales", main="RESIDUALES", col = c("orange", "blue"))
     abline(h = 0, lty = 2, col="purple")
 
+    
   # d.- Obtenemos: pendiente de la recta, ordenada en el origen y coeficiente de determinación R2 
     
     RegModel.1 <- lm(formula=NATURAL_GROWTH2~`GDP_$_PER_CAPITA2`, data=tbl_GDP_NGROWTH)
@@ -199,11 +218,12 @@
     
     stem(tbl_GDP_NGROWTH$`GDP_$_PER_CAPITA2`)   
     
+    
   #   f.- Boxplot
 
   #library(plotly)
   par(mfrow = c(1, 1))
-  boxplot(NATURAL_GROWTH2~`GDP_$_PER_CAPITA2`,data=tbl_GDP_NGROWTH, col=rainbow(70))
+  boxplot(NATURAL_GROWTH2~`GDP_$_PER_CAPITA2`,data=tbl_GDP_NGROWTH, col=rainbow(30))
   
   par(mfrow = c(1, 2))
   boxplot(NATURAL_GROWTH2,data=tbl_GDP_NGROWTH, main="TASA CRECIMIENTO NATURAL", sub="Gráfico 1", 
@@ -211,7 +231,9 @@
   boxplot(`GDP_$_PER_CAPITA2`,data=tbl_GDP_NGROWTH,main="RENTA PER CÁPITA",
          sub="Gráfico 2", ylab="GDP - RENTA PER CÁPITA", col = c("green"))
 
+  
   #  g.- HISTOGRAMAS
+  
   
     # g.1.- Seleccionamos solo los 10 primeros países mayor GDP
   
@@ -219,11 +241,13 @@
   
   tbl_GDP_10[(tbl_GDP_10$NAME=='United Arab Emirates'),1 ]<- 'U. Arab Emirates' #Nombre país muy grande
   
+  
   # g.2.- Seleccionamos solo los 10 primeros países mayor NGROWTH
   
   tbl_GDP_NGROWTH <- tbl_GDP_NGROWTH[order(tbl_GDP_NGROWTH$NATURAL_GROWTH2, decreasing = T), ]
   
   tbl_NGROWTH10<- tbl_GDP_NGROWTH[+(1:10),] # Selecciona 10 filas
+  
   
   # g.3.- Gráficas: Histogramas (GDP & NATURAL_GROWTH)
   
@@ -241,11 +265,13 @@
   #      *** Variable cuantitativa en clases (DISCRETIZACIÓN) **** #
   # ----------------------------------------------------------
   
+  
    # a.- Se extraerán solo los datos expectativas de: "NAME","CONTINENT","GDP_$_PER_CAPITA")
   
   tbl_GDP <- tbl_countries_w[tbl_countries_w$`GDP_$_PER_CAPITA`!='na',c("NAME","CONTINENT","GDP_$_PER_CAPITA")]
   
   tbl_GDP <- tbl_GDP[order(tbl_GDP$`GDP_$_PER_CAPITA`, decreasing = T), ] # ordenado decreciente GDP_$_PER_CAPITA
+  
   
    # b.- Se agruparán los datos "GDP_$_PER_CAPITA". Definimos clases, rango, amplitud.
   
@@ -258,6 +284,7 @@
    #    c.- CODIFICACIÓN: fijar los valores de los extremos de los intervalos.
    # -------------------------------------------------
    
+   
     # c.1.- Intervalos y marcas de clase
    
    L.al <-min(GDP)+amplitud*(0:num_clases) # vector L1_GDP con extremos intervalos
@@ -266,12 +293,14 @@
    MC <- (L.al[1]+L.al[2])/2+amplitud*(0:x.al)       # las marcas de clase
    int_MC <- cut(GDP, breaks=L.al, labels=MC, right=F) # fija los niveles de las marcas de clase
    
+   
    # c.2.- Frecuencias absolutas y relativas, también acumuladas
    
    table(int_GDP) # frecuencias absolutas
    cumsum(table(int_GDP)) # frecuencias absolutas acumuladas
    prop.table(table(int_GDP)) # frecuencias relativas
    cumsum(prop.table(table(int_GDP))) # frecuencias relativas acumuladas 
+   
    
    # c.3.- FUNCIÓN: histograma
    
@@ -328,19 +357,23 @@
     
     tbl_POPULATION <- tbl_countries_w[tbl_countries_w$URBAN_POPULATION!='na'&tbl_countries_w$RURAL_POPULATION!='na', c("NAME","URBAN_POPULATION","RURAL_POPULATION")]
     
+     
     # b.- Se convierten los caracteres en números para hacer cálculos. 
     
     URBAN_POPULATION2 <- as.numeric(tbl_POPULATION$URBAN_POPULATION) # numero <- caracter
     RURAL_POPULATION2 <- as.numeric(tbl_POPULATION$RURAL_POPULATION)
+    
     
     # c.- Se añaden dos nuevas columnas y eliminan otras dos obsoletas
     
     tbl_POPULATION <- cbind(tbl_POPULATION, URBAN_POPULATION2,RURAL_POPULATION2 )
     tbl_POPULATION <- tbl_POPULATION[ ,-(2:3)] # Elimina las filas con caracteres
    
+    
     # d.- Se cambian los nombres a las columnas
     
     names(tbl_POPULATION) <- c('País', 'Urbana', 'Rural') # Cambiar nombres 3 atributos
+    
     
     # e.- Se calculan las frecuencias relativas acumuladas respectivas
     
@@ -351,29 +384,30 @@
     #   E.2- GRÁFICO: Gráfico por sectores con "highchart". 
     #   ---------------------------------------------
     
-    # Gráfico por sectores con "highchart" 
-     library(highcharter)
+    library(highcharter)
    
      population <- data.frame(nombre = c('RURAL', 'URBANA'),
                  Freq = c(Population_Rural, Population_Urbana))
     
-    hc_pie <- highchart(width = 600, height = 600) %>%
+    hc_pie <- highchart(width = 550, height = 550) %>%
       hc_title(text = "Distribución de Población Mundial: RURAL & URBANA") %>%
       hc_chart(type = "pie", options3d = list(enabled = TRUE, alpha = 40, beta =0)) %>%
       hc_plotOptions(pie = list(depth = 55)) %>%
       hc_add_series_labels_values(population$nombre, population$Freq)
     hc_pie
     
+    
     #   F.1- TRANSFORMACIÓN: RECODIFICACIÓN DE DATOS atributo "MAIN_SECTOR"
     
     tbl_countries_w$MAIN_SECTOR = recode(tbl_countries_w$MAIN_SECTOR, 
           " 'Primary'='Agricultura'; 'Secondary'='Industria'; 'Tertiary'='Servicios'; else='S/N' " )
     
-    #   F.2- GRÁFICO: # Gráfico por sectores con "highchart"
+   
+     #   F.2- GRÁFICO: # Gráfico por sectores con "highchart"
     
     tbl_sectores <- as.data.frame(table(tbl_countries_w$MAIN_SECTOR))
    
-    hc_pie <- highchart(width = 600, height = 600) %>%
+    hc_pie <- highchart(width = 550, height = 550) %>%
       hc_title(text = "Distribución Principales Sectores: RURAL & URBANA") %>%
       hc_chart(type = "pie", options3d = list(enabled = TRUE, alpha = 40, beta =0)) %>%
       hc_plotOptions(pie = list(depth = 55)) %>%
@@ -383,6 +417,7 @@
      
   #   G.1- TRANSFORMACIÓN: Relación entre atributos a extraer c(1, 6, 4, 15, 14, 16, 20, 21, 22, 24) 
      
+    
     # a.- Se extraerán solo los datos de los atributos que interesan y cambia el orden presentación.       
     
     tbl_Total_df <- as.data.frame(tbl_countries_w)
@@ -390,6 +425,7 @@
     tbl_Total_10c <-  tbl_Total_df2[tbl_Total_df2$DOCTORS!='na' & tbl_Total_df2$TERTIARY_SECTOR!='na' & tbl_Total_df2$PHONES_RATE!='na' &
                       tbl_Total_df2$NATURAL_GROWTH!='na' & tbl_Total_df2$WOMEN_LIFE_EXP!='na', c("NAME","CONTINENT","POPULATION","GDP_GROW_RATE",
                       "GDP_$_PER_CAPITA","DOCTORS","TERTIARY_SECTOR","PHONES_RATE", "NATURAL_GROWTH","WOMEN_LIFE_EXP" )]
+    
     
     # b.- Se convierten los caracteres en números para hacer cálculos. 
     
@@ -399,10 +435,12 @@
     NATURAL_GROWTH2 <- as.numeric(tbl_Total_10c$NATURAL_GROWTH) # numero <- caracter
     WOMEN_LIFE_EXP2 <- as.numeric(tbl_Total_10c$ WOMEN_LIFE_EXP) # numero <- caracter
     
+    
     # c.- Se añaden nuevas columnas y eliminan las obsoletas
     
     tbl_Total_10c <- cbind(tbl_Total_10c, DOCTORS2, TERTIARY_SECTOR2, PHONES_RATE2, NATURAL_GROWTH2, WOMEN_LIFE_EXP2 )
     tbl_Total_10c <-  tbl_Total_10c[ ,-(6:10)] # Elimina las filas con caracteres
+    
     
     # d.- Se cambian los nombres a las columnas
     
@@ -412,72 +450,30 @@
     
   #  G.2- ANÁLISIS DE LOS DATOS y GRÁFICOS
     
+    
     #  a.- Matriz de datos
     
     Total_10c <- as.data.frame(tbl_Total_10c)
     
-    #  b.- Matriz de covarianza
     
-    acp.cov <- prcomp(Total_10c[3:10], scale=F)
-  
-    acp.cov$rotation # son los autovectores
-    acp.cov$sdev # es la raíz cuadrada autovalores
+    # b.- Análisis de correlación: Calcular la intensidad de la relación.
     
-    # c.- Correlaciones entre Variables y Componentes
+    cor(Total_10c[3:10])
     
-    diag(1/sqrt(diag(cov(Total_10c[3:10])))) %*% acp.cov$rotation %*% diag(acp.cov$sdev)
     
-    # d.- Matriz de correlación
+    # c.- Matriz de gráficos de dispersión: Explorar la relación entre todas las parejas de variables
     
-    acp <- prcomp(Total_10c[3:10], scale=T)
-    summary(acp)
-    acp$rotation # son los autovectores
-    acp$sdev # es la raíz cuadrada autovalores
-    acp$sdev^2 # autovalores
+    library(car)
+    scatterplotMatrix(Total_10c[3:10], diagonal = "hist")    
+        
     
-    # e.- Correlaciones entre Variables y Componentes
-    
-    corvar <- acp$rotation %*% diag(acp$sdev)
-    corvar
-    
-   # f.- Porcentaje de varianza total
-    
-    barplot(summary(acp)$importance[2, ])
-    
-   # g.- Correlación enre Variables y CP1 y CP2
+    # d.- Gráfico de barras para Correlación CP y Variables
     
     par(mfrow = c(1, 1))
-    plot(-1:1, -1:1, type='n', asp=1, xlab='CP1', ylab='CP2')
-    abline(h=0, v=0, lty=2, col=8)
-    ## Dibuja un círculo de centro (0,0) y radio 1
-    symbols(0, 0, 1, inches=F, add=T)
-    symbols(0, 0, sqrt(.5), inches=F, add=T)
-    ## Dibuja los vectores y coloca los nombres
-    arrows(0, 0, corvar[,1], corvar[,2], length=.1)
-    text(corvar[,1], corvar[,2], colnames(Total_10c[3:10]), pos=4, offset=.6, col=2, font=2)
-    
-    
-    # h.- Gráfico de individuos
-    
-    plot(acp$x[, 1:2], pch = 19)
-    abline(h = 0, v = 0, lty = 2, col = 8)
-    
-    
-   # i.- Biplot
-    
-    biplot(acp)
-    abline(h = 0, v = 0, lty = 2, col = 20)
-    
-   # j.- Gráfico de barras para Correlación CP y Variables
-    
     bulnesia.acp <- prcomp(Total_10c[3:10], scale = TRUE)
     bulnesia.cor <- bulnesia.acp$rotation %*% diag(bulnesia.acp$sdev)
-    barplot(t(bulnesia.cor[, 1:3]), beside = TRUE, ylim = c(-1, 1), col = rainbow(20))
-   
+    barplot(t(bulnesia.cor[, 1:3]), beside = TRUE, ylim = c(-0.85, 0.85), col = rainbow(20))
     
-   # k.- Matriz de gráficos de dispersión
+# ....................... THE END .......................... 
     
-   library(car)
-   scatterplotMatrix(Total_10c[3:10], diagonal = "hist")    
-   
-# THE END .....   
+    
