@@ -1,7 +1,7 @@
 # -------------------------------------------------
-# PEC2 - MINERÕA DE DATOS - "PreparaciÛn de datos"
+# PEC2 - MINER√çA DE DATOS - "Preparaci√≥n de datos"
 
-#               salgadogb@uoc.edu
+#               
 # -------------------------------------------------
 
 # 1.- Cargar archivo: "countries.xlsx"
@@ -20,7 +20,7 @@
   str(tbl_countries_w)
 
   
-# 3.- TRANSFORMACI”N DE DATOS
+# 3.- TRANSFORMACI√ìN DE DATOS
 # -------------------------------------------------
   
 #  3.1.- work file: Replacing NA's by 'na' - * Manipular los datos faltantes NA *
@@ -31,86 +31,86 @@
   tbl_countries_w[is.na(tbl_countries_w[])]<- 'na'    # No tratar los casos no observados
   
 
-# 3.2.- AN¡LISIS DE DATOS: "countries.xlsx" 
+# 3.2.- AN√ÅLISIS DE DATOS: "countries.xlsx" 
 # -------------------------------------------------
-  #   A.1- TRANSFORMACI”N: ProducciÛn de crudo por paÌses
-  #   A.2- GR¡FICO: de los mayores productores.
+  #   A.1- TRANSFORMACI√ìN: Producci√≥n de crudo por pa√≠ses
+  #   A.2- GR√ÅFICO: de los mayores productores.
 
-  #   B.1- TRANSFORMACI”N: RelaciÛn expectativas de vida entre: Hombres vs Mujeres.
-  #   B.2- GR¡FICO:nube de puntos de las dos variables con la recta de regresiÛn.
+  #   B.1- TRANSFORMACI√ìN: Relaci√≥n expectativas de vida entre: Hombres vs Mujeres.
+  #   B.2- GR√ÅFICO:nube de puntos de las dos variables con la recta de regresi√≥n.
 
-  #   C.1- TRANSFORMACI”N: RelaciÛn entre `GDP_$_PER_CAPITA` & NATURAL_GROWTH. 
-  #   C.2- GR¡FICO:nube de puntos de las dos variables con la recta de regresiÛn.
+  #   C.1- TRANSFORMACI√ìN: Relaci√≥n entre `GDP_$_PER_CAPITA` & NATURAL_GROWTH. 
+  #   C.2- GR√ÅFICO:nube de puntos de las dos variables con la recta de regresi√≥n.
 
-  #   D.1- TRANSFORMACI”N: AGRUPAR EN INTERVALOS PIP `GDP_$_PER_CAPITA`
-  #   D.2- GR¡FICO: boxplot e histograma.
+  #   D.1- TRANSFORMACI√ìN: AGRUPAR EN INTERVALOS PIP `GDP_$_PER_CAPITA`
+  #   D.2- GR√ÅFICO: boxplot e histograma.
   
-  #   E.1- TRANSFORMACI”N: RelaciÛn entre  URBAN_POPULATION & RURAL_POPULATION
-  #   E.2- GR¡FICO: Gr·fico por sectores con "highchart".
+  #   E.1- TRANSFORMACI√ìN: Relaci√≥n entre  URBAN_POPULATION & RURAL_POPULATION
+  #   E.2- GR√ÅFICO: Gr√°fico por sectores con "highchart".
   
-  #   F.1- TRANSFORMACI”N: RECODIFICACI”N DE DATOS atributo "MAIN_SECTOR"
-  #   F.2- GR¡FICO: # Gr·fico por sectores con "highchart" 
+  #   F.1- TRANSFORMACI√ìN: RECODIFICACI√ìN DE DATOS atributo "MAIN_SECTOR"
+  #   F.2- GR√ÅFICO: # Gr√°fico por sectores con "highchart" 
   
-  #   G.1- TRANSFORMACI”N: RelaciÛn entre atributos a extraer c(1, 6, 4, 15, 14, 16, 20, 21, 22, 24) 
-  #   G.2- AN¡LISIS DE LOS DATOS Y gr·ficos
+  #   G.1- TRANSFORMACI√ìN: Relaci√≥n entre atributos a extraer c(1, 6, 4, 15, 14, 16, 20, 21, 22, 24) 
+  #   G.2- AN√ÅLISIS DE LOS DATOS Y gr√°ficos
 
 
-  #   A.1- PRODUCCI”N DE CRUDO POR PAÕSES: gr·fico de los mayores productores.
+  #   A.1- PRODUCCI√ìN DE CRUDO POR PA√çSES: gr√°fico de los mayores productores.
   # -------------------------------------------------
   
-    #  a.- Se extraer·n solo los datos de PRODUCCI”N observados y PAÕS correspondiente.
+    #  a.- Se extraer√°n solo los datos de PRODUCCI√ìN observados y PA√çS correspondiente.
 
       tbl_CRUDE_OIL_NAME <- tbl_countries_w[tbl_countries_w$CRUDE_OIL_BAR_DAY!='na', c("NAME","CRUDE_OIL_BAR_DAY")] 
       CRUDE_OIL_BAR_DAY2 <- as.numeric(tbl_CRUDE_OIL_NAME$CRUDE_OIL_BAR_DAY) # numero <- caracter
 
-    #  b.- Se simplifican los datos de producciÛn dividiendo por 1000
+    #  b.- Se simplifican los datos de producci√≥n dividiendo por 1000
 
       CRUDE_OIL_BAR_X1000_DAY <- CRUDE_OIL_BAR_DAY2/1000
 
-    #  c.- Se aÒade una nueva columna a tbla_CRUDE_OIL_NAME y elimina la obsoleta con caracteres.
+    #  c.- Se a√±ade una nueva columna a tbla_CRUDE_OIL_NAME y elimina la obsoleta con caracteres.
 
      tbl_CRUDE_OIL_NAME <- cbind(tbl_CRUDE_OIL_NAME, CRUDE_OIL_BAR_X1000_DAY)
      tbl_CRUDE_OIL_NAME <- tbl_CRUDE_OIL_NAME[ ,-(2)] 
      
-    #  d.- Se ordenan los datos de producciÛn de crudo de mayor a menor
+    #  d.- Se ordenan los datos de producci√≥n de crudo de mayor a menor
 
     tbl_CRUDE_OIL_NAME <- tbl_CRUDE_OIL_NAME[order(tbl_CRUDE_OIL_NAME$CRUDE_OIL_BAR_X1000_DAY, decreasing = T), ]
     
     
-  #  A.2- GR¡FICO: de los mayores productores.
+  #  A.2- GR√ÅFICO: de los mayores productores.
   # -------------------------------------------------
     
-    #  a.-Gr·fico de "BARRAS":"PRODUCCI”N DE CRUDO POR PAÕSES: barriles/dÌa X 1000"  
+    #  a.-Gr√°fico de "BARRAS":"PRODUCCI√ìN DE CRUDO POR PA√çSES: barriles/d√≠a X 1000"  
 
-    tbl_CRUDE_OIL_NAME[(tbl_CRUDE_OIL_NAME$NAME=='United Arab Emirates'),1 ]<- 'U. Arab Emirates' #Nombre paÌs muy grande
+    tbl_CRUDE_OIL_NAME[(tbl_CRUDE_OIL_NAME$NAME=='United Arab Emirates'),1 ]<- 'U. Arab Emirates' #Nombre pa√≠s muy grande
 
-    barplot(tbl_CRUDE_OIL_NAME$CRUDE_OIL_BAR_X1000_DAY, main= "PRODUCCI”N DE CRUDO POR PAÕSES: barriles/dÌa X 1000",
+    barplot(tbl_CRUDE_OIL_NAME$CRUDE_OIL_BAR_X1000_DAY, main= "PRODUCCI√ìN DE CRUDO POR PA√çSES: barriles/d√≠a X 1000",
         names.arg=tbl_CRUDE_OIL_NAME$NAME, col=rainbow(50),las=2, cex.names=0.6,horiz = F)
     
 
-    #  b.- Gr·fico de "COORD_POLAR":"PRODUCCI”N DE CRUDO POR PAÕSES: barriles/dÌa X 1000"  
+    #  b.- Gr√°fico de "COORD_POLAR":"PRODUCCI√ìN DE CRUDO POR PA√çSES: barriles/d√≠a X 1000"  
 
     library(ggplot2)
     
     ggplot(data=tbl_CRUDE_OIL_NAME, width = 700, height = 700, aes(x=reorder(NAME,-CRUDE_OIL_BAR_X1000_DAY), y=CRUDE_OIL_BAR_X1000_DAY, fill=tbl_CRUDE_OIL_NAME$NAME)) +
-    geom_bar(stat="identity") + ggtitle("PRODUCCI”N DE CRUDO POR PAÕSES: barriles/dÌa X 1000")+ theme_minimal()+
+    geom_bar(stat="identity") + ggtitle("PRODUCCI√ìN DE CRUDO POR PA√çSES: barriles/d√≠a X 1000")+ theme_minimal()+
     coord_polar(theta = "x", direction=1 )   
 
     # width = 700, height = 700,
     
-  #  B.1- TRANSFORMACI”N: RelaciÛn EXPECTATIVAS DE VIDA entre: Hombres vs Mujeres.
+  #  B.1- TRANSFORMACI√ìN: Relaci√≥n EXPECTATIVAS DE VIDA entre: Hombres vs Mujeres.
   # -------------------------------------------------    
     
-    # a.- Se extraer·n solo los datos expectativas de vida H y M, y nombre paÌs correspondiente.       
+    # a.- Se extraer√°n solo los datos expectativas de vida H y M, y nombre pa√≠s correspondiente.       
 
     tbl_LIFE_EXP_M_W <- tbl_countries_w[tbl_countries_w$MEM_LIFE_EXP!='na'&tbl_countries_w$WOMEN_LIFE_EXP!='na', c("NAME","MEM_LIFE_EXP","WOMEN_LIFE_EXP")]
    
-    # b.- Se convierten los caracteres en n˙meros para hacer c·lculos. 
+    # b.- Se convierten los caracteres en n√∫meros para hacer c√°lculos. 
     
     MEM_LIFE_EXP2 <- as.numeric(tbl_LIFE_EXP_M_W$MEM_LIFE_EXP) # numero <- caracter
     WOMEN_LIFE_EXP2 <- as.numeric(tbl_LIFE_EXP_M_W$WOMEN_LIFE_EXP)
 
-    # c.- Se aÒaden dos nuevas columnas a LIFE_EXP_M_W y eliminan otras dos obsoletas
+    # c.- Se a√±aden dos nuevas columnas a LIFE_EXP_M_W y eliminan otras dos obsoletas
 
     tbl_LIFE_EXP_M_W <- cbind(tbl_LIFE_EXP_M_W, MEM_LIFE_EXP2,WOMEN_LIFE_EXP2 )
     tbl_LIFE_EXP_M_W <- tbl_LIFE_EXP_M_W[ ,-(2:3)] # Elimina las filas con caracteres
@@ -120,79 +120,79 @@
     tbl_LIFE_EXP_M_W <- tbl_LIFE_EXP_M_W[order(tbl_LIFE_EXP_M_W$WOMEN_LIFE_EXP2, decreasing = T), ]
     
 
-  #  B.2- GR¡FICO:nube de puntos de las dos variables con la recta de regresiÛn.
+  #  B.2- GR√ÅFICO:nube de puntos de las dos variables con la recta de regresi√≥n.
   # -------------------------------------------------
     
-    # a.- Realizamos el gr·fico de la nube de puntos de las dos variables con la recta de regresiÛn
+    # a.- Realizamos el gr√°fico de la nube de puntos de las dos variables con la recta de regresi√≥n
     
-    plot(MEM_LIFE_EXP2~WOMEN_LIFE_EXP2, main="RELACI”N EXPECTATIVA DE VIDA: HOMBRES & MUJERES", sub="Para cada paÌs", 
+    plot(MEM_LIFE_EXP2~WOMEN_LIFE_EXP2, main="RELACI√ìN EXPECTATIVA DE VIDA: HOMBRES & MUJERES", sub="Para cada pa√≠s", 
           xlab="Expectativa Vida: MUJERES", ylab="Expectativa Vida: HOMBRES", data=tbl_LIFE_EXP_M_W, 
          col = c("orange", "blue"))
     
-      # b.- Hallamos la recta de regresiÛn entre ambos resultados.
+      # b.- Hallamos la recta de regresi√≥n entre ambos resultados.
     
     abline(lm(formula=MEM_LIFE_EXP2~WOMEN_LIFE_EXP2, data=tbl_LIFE_EXP_M_W),col="red")
 
-    #  c.- Obtenemos: pendiente de la recta, ordenada en el origen y coeficiente de determinaciÛn R2 
+    #  c.- Obtenemos: pendiente de la recta, ordenada en el origen y coeficiente de determinaci√≥n R2 
     
     RegModel.1 <- lm(formula=MEM_LIFE_EXP2~WOMEN_LIFE_EXP2, data=tbl_LIFE_EXP_M_W)
     summary(RegModel.1)
 
-       # Resultados: Coeficiente DeterminaciÛn R2=0.961 (Muy buen ajuste),
+       # Resultados: Coeficiente Determinaci√≥n R2=0.961 (Muy buen ajuste),
        #             Ordenada en el origen a=4.03783
        #             Pendiente b=0.87395
-       #             Y = 0.87395X + 4.03783 (Permite calcular edad Hombre <- en funciÛn edad Mujer)
+       #             Y = 0.87395X + 4.03783 (Permite calcular edad Hombre <- en funci√≥n edad Mujer)
 
 
-  #  C.1- TRANSFORMACI”N: RelaciÛn entre: `GDP_$_PER_CAPITA` & NATURAL_GROWTH. 
+  #  C.1- TRANSFORMACI√ìN: Relaci√≥n entre: `GDP_$_PER_CAPITA` & NATURAL_GROWTH. 
   # -------------------------------------------------
     
-    #  a.- Se extraer·n solo los datos expectativas de: "NAME","GDP_$_PER_CAPITA","NATURAL_GROWTH"
+    #  a.- Se extraer√°n solo los datos expectativas de: "NAME","GDP_$_PER_CAPITA","NATURAL_GROWTH"
 
     tbl_GDP_NGROWTH <- tbl_countries_w[tbl_countries_w$`GDP_$_PER_CAPITA`!='na'&tbl_countries_w$NATURAL_GROWTH!='na', c("NAME","GDP_$_PER_CAPITA","NATURAL_GROWTH")]
     `GDP_$_PER_CAPITA2` <- as.numeric(tbl_GDP_NGROWTH$`GDP_$_PER_CAPITA`) # numero <- caracter
     NATURAL_GROWTH2 <- as.numeric(tbl_GDP_NGROWTH$NATURAL_GROWTH)
 
-    #  c.- Se aÒaden dos nuevas columnas a tbl_GDP_NGROWTH
+    #  c.- Se a√±aden dos nuevas columnas a tbl_GDP_NGROWTH
 
     tbl_GDP_NGROWTH <- cbind(tbl_GDP_NGROWTH, `GDP_$_PER_CAPITA2`,NATURAL_GROWTH2 )
-    tbl_GDP_NGROWTH <- tbl_GDP_NGROWTH[ ,-(2:3)] # Elimina las filas con caracteres deja n˙meros
+    tbl_GDP_NGROWTH <- tbl_GDP_NGROWTH[ ,-(2:3)] # Elimina las filas con caracteres deja n√∫meros
    
-    #  d.- Se ordenan los datos de producciÛn `GDP_$_PER_CAPITA2`
+    #  d.- Se ordenan los datos de producci√≥n `GDP_$_PER_CAPITA2`
 
     tbl_GDP_NGROWTH <- tbl_GDP_NGROWTH[order(tbl_GDP_NGROWTH$`GDP_$_PER_CAPITA2`, decreasing = T), ]
     
 
-  #   C.2- GR¡FICO:"NUBE DE PUNTOS" y "RESIDUOS" de las dos variables
+  #   C.2- GR√ÅFICO:"NUBE DE PUNTOS" y "RESIDUOS" de las dos variables
   # -------------------------------------------------
     
-   # a.- Realizamos el gr·fico de la nube de puntos de las dos variables con la recta de regresiÛn
+   # a.- Realizamos el gr√°fico de la nube de puntos de las dos variables con la recta de regresi√≥n
 
     par(mfrow = c(2, 2))
-    plot(NATURAL_GROWTH2~`GDP_$_PER_CAPITA2`, main="RELACI”N ENTRE:\n
-         Tasa Crecimiento & Renta Per C·pita", sub="Gr·fico 1", 
-    xlab="GDP - RENTA PER C¡PITA", ylab="TASA CRECIMIENTO NATURAL", data=tbl_GDP_NGROWTH, col = c("orange", "blue"))
+    plot(NATURAL_GROWTH2~`GDP_$_PER_CAPITA2`, main="RELACI√ìN ENTRE:\n
+         Tasa Crecimiento & Renta Per C√°pita", sub="Gr√°fico 1", 
+    xlab="GDP - RENTA PER C√ÅPITA", ylab="TASA CRECIMIENTO NATURAL", data=tbl_GDP_NGROWTH, col = c("orange", "blue"))
 
-  # b.- Hallamos la recta de regresiÛn entre ambos resultados.
+  # b.- Hallamos la recta de regresi√≥n entre ambos resultados.
        
     m0 <- lm(NATURAL_GROWTH2~`GDP_$_PER_CAPITA2`, data=tbl_GDP_NGROWTH)
     abline(m0,col="red")
     
   # c.- Hallamos residuos entre ambos resultados.   
     
-    plot(tbl_GDP_NGROWTH$`GDP_$_PER_CAPITA2`, residuals(m0), xlab = "Gr·fico 2",
+    plot(tbl_GDP_NGROWTH$`GDP_$_PER_CAPITA2`, residuals(m0), xlab = "Gr√°fico 2",
          ylab = "Residuales", main="RESIDUALES", col = c("orange", "blue"))
     abline(h = 0, lty = 2, col="purple")
 
-  # d.- Obtenemos: pendiente de la recta, ordenada en el origen y coeficiente de determinaciÛn R2 
+  # d.- Obtenemos: pendiente de la recta, ordenada en el origen y coeficiente de determinaci√≥n R2 
     
     RegModel.1 <- lm(formula=NATURAL_GROWTH2~`GDP_$_PER_CAPITA2`, data=tbl_GDP_NGROWTH)
     summary(RegModel.1)
 
-        # Resultados: Coeficiente DeterminaciÛn R2=0.38 (Muy mal ajuste),
+        # Resultados: Coeficiente Determinaci√≥n R2=0.38 (Muy mal ajuste),
         #             Pendiente b=-9.542e-04 (NEGATIVA)
         #             Y = -9.542e-04X + 2.662e+01 
-        # (NO Permite calcular la tasa de crecimiento poblacional conociendo la renta per c·pita)
+        # (NO Permite calcular la tasa de crecimiento poblacional conociendo la renta per c√°pita)
 
     
   #  e.- Diagrama de "TALLO Y HOJA"
@@ -206,26 +206,26 @@
   boxplot(NATURAL_GROWTH2~`GDP_$_PER_CAPITA2`,data=tbl_GDP_NGROWTH, col=rainbow(70))
   
   par(mfrow = c(1, 2))
-  boxplot(NATURAL_GROWTH2,data=tbl_GDP_NGROWTH, main="TASA CRECIMIENTO NATURAL", sub="Gr·fico 1", 
+  boxplot(NATURAL_GROWTH2,data=tbl_GDP_NGROWTH, main="TASA CRECIMIENTO NATURAL", sub="Gr√°fico 1", 
          ylab="TASA CRECIMIENTO NATURAL", col = c("orange"))
-  boxplot(`GDP_$_PER_CAPITA2`,data=tbl_GDP_NGROWTH,main="RENTA PER C¡PITA",
-         sub="Gr·fico 2", ylab="GDP - RENTA PER C¡PITA", col = c("green"))
+  boxplot(`GDP_$_PER_CAPITA2`,data=tbl_GDP_NGROWTH,main="RENTA PER C√ÅPITA",
+         sub="Gr√°fico 2", ylab="GDP - RENTA PER C√ÅPITA", col = c("green"))
 
   #  g.- HISTOGRAMAS
   
-    # g.1.- Seleccionamos solo los 10 primeros paÌses mayor GDP
+    # g.1.- Seleccionamos solo los 10 primeros pa√≠ses mayor GDP
   
   tbl_GDP_10 <- tbl_GDP_NGROWTH[+(1:10),] # Selecciona 10 filas
   
-  tbl_GDP_10[(tbl_GDP_10$NAME=='United Arab Emirates'),1 ]<- 'U. Arab Emirates' #Nombre paÌs muy grande
+  tbl_GDP_10[(tbl_GDP_10$NAME=='United Arab Emirates'),1 ]<- 'U. Arab Emirates' #Nombre pa√≠s muy grande
   
-  # g.2.- Seleccionamos solo los 10 primeros paÌses mayor NGROWTH
+  # g.2.- Seleccionamos solo los 10 primeros pa√≠ses mayor NGROWTH
   
   tbl_GDP_NGROWTH <- tbl_GDP_NGROWTH[order(tbl_GDP_NGROWTH$NATURAL_GROWTH2, decreasing = T), ]
   
   tbl_NGROWTH10<- tbl_GDP_NGROWTH[+(1:10),] # Selecciona 10 filas
   
-  # g.3.- Gr·ficas: Histogramas (GDP & NATURAL_GROWTH)
+  # g.3.- Gr√°ficas: Histogramas (GDP & NATURAL_GROWTH)
   
   par(mfrow = c(1, 2))
   
@@ -236,18 +236,18 @@
           names.arg=tbl_NGROWTH10$NAME, col=rainbow(17),las=2, cex.names=0.6,horiz = F)
   
   
-  #   D.1- TRANSFORMACI”N: AGRUPAR EN INTERVALOS: `GDP_$_PER_CAPITA`
+  #   D.1- TRANSFORMACI√ìN: AGRUPAR EN INTERVALOS: `GDP_$_PER_CAPITA`
   
-  #      *** Variable cuantitativa en clases (DISCRETIZACI”N) **** #
+  #      *** Variable cuantitativa en clases (DISCRETIZACI√ìN) **** #
   # ----------------------------------------------------------
   
-   # a.- Se extraer·n solo los datos expectativas de: "NAME","CONTINENT","GDP_$_PER_CAPITA")
+   # a.- Se extraer√°n solo los datos expectativas de: "NAME","CONTINENT","GDP_$_PER_CAPITA")
   
   tbl_GDP <- tbl_countries_w[tbl_countries_w$`GDP_$_PER_CAPITA`!='na',c("NAME","CONTINENT","GDP_$_PER_CAPITA")]
   
   tbl_GDP <- tbl_GDP[order(tbl_GDP$`GDP_$_PER_CAPITA`, decreasing = T), ] # ordenado decreciente GDP_$_PER_CAPITA
   
-   # b.- Se agrupar·n los datos "GDP_$_PER_CAPITA". Definimos clases, rango, amplitud.
+   # b.- Se agrupar√°n los datos "GDP_$_PER_CAPITA". Definimos clases, rango, amplitud.
   
    GDP <- tbl_GDP$`GDP_$_PER_CAPITA`  # vector
    num_clases <- nclass.scott(GDP) # = 7 clases y nclass.Sturges(GDP) = 9 Clases
@@ -255,7 +255,7 @@
    amplitud <- round(rango/num_clases)
    
    
-   #    c.- CODIFICACI”N: fijar los valores de los extremos de los intervalos.
+   #    c.- CODIFICACI√ìN: fijar los valores de los extremos de los intervalos.
    # -------------------------------------------------
    
     # c.1.- Intervalos y marcas de clase
@@ -266,14 +266,14 @@
    MC <- (L.al[1]+L.al[2])/2+amplitud*(0:x.al)       # las marcas de clase
    int_MC <- cut(GDP, breaks=L.al, labels=MC, right=F) # fija los niveles de las marcas de clase
    
-   # c.2.- Frecuencias absolutas y relativas, tambiÈn acumuladas
+   # c.2.- Frecuencias absolutas y relativas, tambi√©n acumuladas
    
    table(int_GDP) # frecuencias absolutas
    cumsum(table(int_GDP)) # frecuencias absolutas acumuladas
    prop.table(table(int_GDP)) # frecuencias relativas
    cumsum(prop.table(table(int_GDP))) # frecuencias relativas acumuladas 
    
-   # c.3.- FUNCI”N: histograma
+   # c.3.- FUNCI√ìN: histograma
    
     # c.3.i.- hist_real
    
@@ -282,7 +282,7 @@
      t<- round(1.1*max(max(density(x)[[2]]), h$density), 2)
      plot(h, freq=F, col="yellow", 
       main="Histograma frec. relativas y\n
-      curva distribuciÛn estimada",
+      curva distribuci√≥n estimada",
       xaxt="n",  xlab="Intervalos", ylab="Densidades")
      axis(1, at=L)
      text(h$mids, h$density/2, 
@@ -307,7 +307,7 @@
    }
    
   
-   # c.4.- Gr·fico: histograma de frecuencias relativas acumuladas
+   # c.4.- Gr√°fico: histograma de frecuencias relativas acumuladas
   
     par(mfrow = c(1, 2))
        hist(GDP, breaks=L.al, right=F, plot=T, main="Histograma frec. absolutas",
@@ -320,27 +320,27 @@
      hist_real.cum(GDP, L.al)
    
 
-    #   E.1- TRANSFORMACI”N: RelaciÛn entre URBAN_POPULATION & RURAL_POPULATION
+    #   E.1- TRANSFORMACI√ìN: Relaci√≥n entre URBAN_POPULATION & RURAL_POPULATION
     #   --------------------------------------------- 
     
     
-    # a.- Se extraer·n solo los datos URBAN_POPULATION & RURAL_POPULATION y nombre paÌs correspondiente.       
+    # a.- Se extraer√°n solo los datos URBAN_POPULATION & RURAL_POPULATION y nombre pa√≠s correspondiente.       
     
     tbl_POPULATION <- tbl_countries_w[tbl_countries_w$URBAN_POPULATION!='na'&tbl_countries_w$RURAL_POPULATION!='na', c("NAME","URBAN_POPULATION","RURAL_POPULATION")]
     
-    # b.- Se convierten los caracteres en n˙meros para hacer c·lculos. 
+    # b.- Se convierten los caracteres en n√∫meros para hacer c√°lculos. 
     
     URBAN_POPULATION2 <- as.numeric(tbl_POPULATION$URBAN_POPULATION) # numero <- caracter
     RURAL_POPULATION2 <- as.numeric(tbl_POPULATION$RURAL_POPULATION)
     
-    # c.- Se aÒaden dos nuevas columnas y eliminan otras dos obsoletas
+    # c.- Se a√±aden dos nuevas columnas y eliminan otras dos obsoletas
     
     tbl_POPULATION <- cbind(tbl_POPULATION, URBAN_POPULATION2,RURAL_POPULATION2 )
     tbl_POPULATION <- tbl_POPULATION[ ,-(2:3)] # Elimina las filas con caracteres
    
     # d.- Se cambian los nombres a las columnas
     
-    names(tbl_POPULATION) <- c('PaÌs', 'Urbana', 'Rural') # Cambiar nombres 3 atributos
+    names(tbl_POPULATION) <- c('Pa√≠s', 'Urbana', 'Rural') # Cambiar nombres 3 atributos
     
     # e.- Se calculan las frecuencias relativas acumuladas respectivas
     
@@ -348,42 +348,42 @@
     Population_Rural <- mean(tbl_POPULATION$Rural)
    
     
-    #   E.2- GR¡FICO: Gr·fico por sectores con "highchart". 
+    #   E.2- GR√ÅFICO: Gr√°fico por sectores con "highchart". 
     #   ---------------------------------------------
     
-    # Gr·fico por sectores con "highchart" 
+    # Gr√°fico por sectores con "highchart" 
      library(highcharter)
    
      population <- data.frame(nombre = c('RURAL', 'URBANA'),
                  Freq = c(Population_Rural, Population_Urbana))
     
     hc_pie <- highchart(width = 600, height = 600) %>%
-      hc_title(text = "DistribuciÛn de PoblaciÛn Mundial: RURAL & URBANA") %>%
+      hc_title(text = "Distribuci√≥n de Poblaci√≥n Mundial: RURAL & URBANA") %>%
       hc_chart(type = "pie", options3d = list(enabled = TRUE, alpha = 40, beta =0)) %>%
       hc_plotOptions(pie = list(depth = 55)) %>%
       hc_add_series_labels_values(population$nombre, population$Freq)
     hc_pie
     
-    #   F.1- TRANSFORMACI”N: RECODIFICACI”N DE DATOS atributo "MAIN_SECTOR"
+    #   F.1- TRANSFORMACI√ìN: RECODIFICACI√ìN DE DATOS atributo "MAIN_SECTOR"
     
     tbl_countries_w$MAIN_SECTOR = recode(tbl_countries_w$MAIN_SECTOR, 
           " 'Primary'='Agricultura'; 'Secondary'='Industria'; 'Tertiary'='Servicios'; else='S/N' " )
     
-    #   F.2- GR¡FICO: # Gr·fico por sectores con "highchart"
+    #   F.2- GR√ÅFICO: # Gr√°fico por sectores con "highchart"
     
     tbl_sectores <- as.data.frame(table(tbl_countries_w$MAIN_SECTOR))
    
     hc_pie <- highchart(width = 600, height = 600) %>%
-      hc_title(text = "DistribuciÛn Principales Sectores: RURAL & URBANA") %>%
+      hc_title(text = "Distribuci√≥n Principales Sectores: RURAL & URBANA") %>%
       hc_chart(type = "pie", options3d = list(enabled = TRUE, alpha = 40, beta =0)) %>%
       hc_plotOptions(pie = list(depth = 55)) %>%
       hc_add_series_labels_values(tbl_sectores$Var1, tbl_sectores$Freq)
     hc_pie
     
      
-  #   G.1- TRANSFORMACI”N: RelaciÛn entre atributos a extraer c(1, 6, 4, 15, 14, 16, 20, 21, 22, 24) 
+  #   G.1- TRANSFORMACI√ìN: Relaci√≥n entre atributos a extraer c(1, 6, 4, 15, 14, 16, 20, 21, 22, 24) 
      
-    # a.- Se extraer·n solo los datos de los atributos que interesan y cambia el orden presentaciÛn.       
+    # a.- Se extraer√°n solo los datos de los atributos que interesan y cambia el orden presentaci√≥n.       
     
     tbl_Total_df <- as.data.frame(tbl_countries_w)
     tbl_Total_df2 <- tbl_Total_df[ , c(1, 6, 4, 15, 14, 16, 20, 21, 22, 24)]
@@ -391,7 +391,7 @@
                       tbl_Total_df2$NATURAL_GROWTH!='na' & tbl_Total_df2$WOMEN_LIFE_EXP!='na', c("NAME","CONTINENT","POPULATION","GDP_GROW_RATE",
                       "GDP_$_PER_CAPITA","DOCTORS","TERTIARY_SECTOR","PHONES_RATE", "NATURAL_GROWTH","WOMEN_LIFE_EXP" )]
     
-    # b.- Se convierten los caracteres en n˙meros para hacer c·lculos. 
+    # b.- Se convierten los caracteres en n√∫meros para hacer c√°lculos. 
     
     DOCTORS2 <- as.numeric(tbl_Total_10c$DOCTORS) # numero <- caracter
     TERTIARY_SECTOR2 <- as.numeric(tbl_Total_10c$TERTIARY_SECTOR) # numero <- caracter
@@ -399,18 +399,18 @@
     NATURAL_GROWTH2 <- as.numeric(tbl_Total_10c$NATURAL_GROWTH) # numero <- caracter
     WOMEN_LIFE_EXP2 <- as.numeric(tbl_Total_10c$ WOMEN_LIFE_EXP) # numero <- caracter
     
-    # c.- Se aÒaden nuevas columnas y eliminan las obsoletas
+    # c.- Se a√±aden nuevas columnas y eliminan las obsoletas
     
     tbl_Total_10c <- cbind(tbl_Total_10c, DOCTORS2, TERTIARY_SECTOR2, PHONES_RATE2, NATURAL_GROWTH2, WOMEN_LIFE_EXP2 )
     tbl_Total_10c <-  tbl_Total_10c[ ,-(6:10)] # Elimina las filas con caracteres
     
     # d.- Se cambian los nombres a las columnas
     
-    names(tbl_Total_10c) <- c('PaÌs', 'Continente', 'Habitantes', 'Ratio_Crec_PIB', 'PIBP', 'Doctores',
+    names(tbl_Total_10c) <- c('Pa√≠s', 'Continente', 'Habitantes', 'Ratio_Crec_PIB', 'PIBP', 'Doctores',
                            'Servicios', 'Ratio_Tfno', 'Crec_Natural', 'Exp_Vida_M' ) 
    
     
-  #  G.2- AN¡LISIS DE LOS DATOS y GR¡FICOS
+  #  G.2- AN√ÅLISIS DE LOS DATOS y GR√ÅFICOS
     
     #  a.- Matriz de datos
     
@@ -421,18 +421,18 @@
     acp.cov <- prcomp(Total_10c[3:10], scale=F)
   
     acp.cov$rotation # son los autovectores
-    acp.cov$sdev # es la raÌz cuadrada autovalores
+    acp.cov$sdev # es la ra√≠z cuadrada autovalores
     
     # c.- Correlaciones entre Variables y Componentes
     
     diag(1/sqrt(diag(cov(Total_10c[3:10])))) %*% acp.cov$rotation %*% diag(acp.cov$sdev)
     
-    # d.- Matriz de correlaciÛn
+    # d.- Matriz de correlaci√≥n
     
     acp <- prcomp(Total_10c[3:10], scale=T)
     summary(acp)
     acp$rotation # son los autovectores
-    acp$sdev # es la raÌz cuadrada autovalores
+    acp$sdev # es la ra√≠z cuadrada autovalores
     acp$sdev^2 # autovalores
     
     # e.- Correlaciones entre Variables y Componentes
@@ -444,12 +444,12 @@
     
     barplot(summary(acp)$importance[2, ])
     
-   # g.- CorrelaciÛn enre Variables y CP1 y CP2
+   # g.- Correlaci√≥n enre Variables y CP1 y CP2
     
     par(mfrow = c(1, 1))
     plot(-1:1, -1:1, type='n', asp=1, xlab='CP1', ylab='CP2')
     abline(h=0, v=0, lty=2, col=8)
-    ## Dibuja un cÌrculo de centro (0,0) y radio 1
+    ## Dibuja un c√≠rculo de centro (0,0) y radio 1
     symbols(0, 0, 1, inches=F, add=T)
     symbols(0, 0, sqrt(.5), inches=F, add=T)
     ## Dibuja los vectores y coloca los nombres
@@ -457,7 +457,7 @@
     text(corvar[,1], corvar[,2], colnames(Total_10c[3:10]), pos=4, offset=.6, col=2, font=2)
     
     
-    # h.- Gr·fico de individuos
+    # h.- Gr√°fico de individuos
     
     plot(acp$x[, 1:2], pch = 19)
     abline(h = 0, v = 0, lty = 2, col = 8)
@@ -468,14 +468,14 @@
     biplot(acp)
     abline(h = 0, v = 0, lty = 2, col = 20)
     
-   # j.- Gr·fico de barras para CorrelaciÛn CP y Variables
+   # j.- Gr√°fico de barras para Correlaci√≥n CP y Variables
     
     bulnesia.acp <- prcomp(Total_10c[3:10], scale = TRUE)
     bulnesia.cor <- bulnesia.acp$rotation %*% diag(bulnesia.acp$sdev)
     barplot(t(bulnesia.cor[, 1:3]), beside = TRUE, ylim = c(-1, 1), col = rainbow(20))
    
     
-   # k.- Matriz de gr·ficos de dispersiÛn
+   # k.- Matriz de gr√°ficos de dispersi√≥n
     
    library(car)
    scatterplotMatrix(Total_10c[3:10], diagonal = "hist")    
